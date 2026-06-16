@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" style="background:#0D1A16">
+<html lang="pt-BR" style="background:#061812">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,27 +29,27 @@
   <style>
   
   /* ── NAVBAR ── */
-  .navbar { background: #041008; border-bottom: 1px solid #152E28; padding: 0 1.5rem; display: flex; align-items: center; height: 48px; gap: 0; }
+  .navbar { background: #041008; border-bottom: 1px solid #0D3B1A; padding: 0 1.5rem; display: flex; align-items: center; height: 48px; gap: 0; }
   .navbar .logo { font-size: 20px; font-weight: 700; color: #E2E8F5; text-decoration: none; margin-right: 2rem; }
-  .navbar .logo span { color: #3D7A6A; }
-  .navbar a { font-size: 13px; color: #5A9E95; text-decoration: none; padding: 0 14px; height: 48px; display: flex; align-items: center; border-bottom: 2px solid transparent; transition: all 0.15s; }
+  .navbar .logo span { color: #39D353; }
+  .navbar a { font-size: 13px; color: #5A9E6A; text-decoration: none; padding: 0 14px; height: 48px; display: flex; align-items: center; border-bottom: 2px solid transparent; transition: all 0.15s; }
   .navbar a:hover { color: #E2E8F5; }
-  .navbar a.active { color: #3D7A6A; border-bottom-color: #3D7A6A; }
+  .navbar a.active { color: #39D353; border-bottom-color: #39D353; }
 
   :root {
-      --bg:        #0D1A16;
-      --bg2:       #0D1A16;
-      --bg3:       #0D1A16;
-      --border:    #0D1A16;
-      --border2:   #152E28;
+      --bg:        #061812;
+      --bg2:       #061812;
+      --bg3:       #061812;
+      --border:    #061812;
+      --border2:   #0D3B1A;
       --txt:       #E2E8F5;
       --txt2:      #7E8DB0;
       --txt3:      #4A5578;
-      --accent:    #3D7A6A;
-      --green:     #3D7A6A;
+      --accent:    #39D353;
+      --green:     #39D353;
       --red:       #E05252;
       --yellow:    #D4952A;
-      --green-bg:  #0D1A16;
+      --green-bg:  #061812;
       --red-bg:    #2E1414;
       --yellow-bg: #2B2010;
       --font:      'Inter', system-ui, sans-serif;
@@ -58,12 +58,12 @@
       --radius-lg: 10px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 14px; scroll-behavior: smooth; background: #0D1A16; }
-    table, tbody, tbody tr { background: #0D1A16; }
+    html { font-size: 14px; scroll-behavior: smooth; background: #061812; }
+    table, tbody, tbody tr { background: #061812; }
     tbody tr:nth-child(even) { background: #050E08; }
-    tbody tr:hover { background: #0D1A16 !important; }
-    .table-wrap { background: #0D1A16; }
-    input, select { background-color: #0D1A16 !important; color: #E2E8F5 !important; }
+    tbody tr:hover { background: #061812 !important; }
+    .table-wrap { background: #061812; }
+    input, select { background-color: #061812 !important; color: #E2E8F5 !important; }
     body { font-family: var(--font); background: var(--bg); color: var(--txt); min-height: 100vh; }
 
     /* ═══════════════════════════════════════
@@ -159,7 +159,7 @@
       background: var(--bg2); white-space: nowrap;
     }
     .chip b { font-weight: 500; }
-    .chip.c-green { border-color: #1A3A30; background: var(--green-bg); }
+    .chip.c-green { border-color: #1A4030; background: var(--green-bg); }
     .chip.c-green b { color: var(--green); }
     .chip.c-red { border-color: #401C1C; background: var(--red-bg); }
     .chip.c-red b { color: var(--red); }
@@ -213,7 +213,7 @@
       background: var(--bg3); border: 1px solid var(--border);
       position: relative; overflow: visible;
     }
-    .therm-gradient { position: absolute; inset: 0; border-radius: 4px; background: linear-gradient(to right, #3D7A6A44, #D4952A44, #E0525244); }
+    .therm-gradient { position: absolute; inset: 0; border-radius: 4px; background: linear-gradient(to right, #39D35344, #D4952A44, #E0525244); }
     .therm-needle {
       position: absolute; top: 50%; transform: translate(-50%,-50%);
       width: 13px; height: 13px; border-radius: 50%;
@@ -265,7 +265,7 @@
 
     .dcf-box { border-radius: var(--radius); padding: 1rem; margin-top: 0.75rem; border: 1px solid var(--border2); background: var(--bg3); }
     .dcf-therm-track { height: 18px; border-radius: 9px; position: relative; overflow: hidden; margin-top: 10px; }
-    .dcf-therm-bg { position: absolute; inset: 0; background: linear-gradient(to right, #3D7A6A 0%, #D4952A 50%, #E05252 100%); opacity: 0.22; }
+    .dcf-therm-bg { position: absolute; inset: 0; background: linear-gradient(to right, #39D353 0%, #D4952A 50%, #E05252 100%); opacity: 0.22; }
     .dcf-needle {
       position: absolute; top: 50%; transform: translate(-50%,-50%);
       width: 22px; height: 22px; border-radius: 50%;
@@ -274,9 +274,9 @@
     }
     .dcf-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--txt3); margin-top: 5px; }
     .verdict-pill { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
-    .vp-buy  { background: var(--green-bg); color: var(--green); border: 1px solid #1A3A30; }
+    .vp-buy  { background: var(--green-bg); color: var(--green); border: 1px solid #1A4030; }
     .vp-sell { background: var(--red-bg);   color: var(--red);   border: 1px solid #401C1C; }
-    .vp-fair { background: #0D1A16;          color: var(--accent); border: 1px solid #1A2E56; }
+    .vp-fair { background: #061812;          color: var(--accent); border: 1px solid #1A2E56; }
     .modal-btn {
       margin-top: 0.9rem; width: 100%; height: 36px; font-size: 12px;
       border-radius: var(--radius); border: 1px solid var(--border2);
@@ -298,32 +298,32 @@
       .controls, .stats-bar, .legend { padding: 8px 12px; }
       .mgrid { grid-template-columns: 1fr; }
     }
-    .pagination { display:flex; align-items:center; justify-content:space-between; padding:10px 20px; border-top:1px solid #0D1A16; background:#0D1A16; flex-wrap:wrap; gap:8px; }
+    .pagination { display:flex; align-items:center; justify-content:space-between; padding:10px 20px; border-top:1px solid #061812; background:#061812; flex-wrap:wrap; gap:8px; }
     .pagination-info { font-size:11px; color:#4A5578; }
     .pagination-info b { color:#7E8DB0; }
     .page-btns { display:flex; gap:4px; }
-    .page-btn { height:28px; min-width:28px; padding:0 8px; font-size:11px; border-radius:5px; border:1px solid #152E28; background:#0D1A16; color:#7E8DB0; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.15s; }
-    .page-btn:hover:not(:disabled) { background:#0D1A16; color:#E2E8F5; }
-    .page-btn.active { background:#071409; border-color:#3D7A6A; color:#3D7A6A; font-weight:500; }
+    .page-btn { height:28px; min-width:28px; padding:0 8px; font-size:11px; border-radius:5px; border:1px solid #0D3B1A; background:#061812; color:#7E8DB0; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.15s; }
+    .page-btn:hover:not(:disabled) { background:#061812; color:#E2E8F5; }
+    .page-btn.active { background:#071409; border-color:#39D353; color:#39D353; font-weight:500; }
     .page-btn:disabled { opacity:0.3; cursor:not-allowed; }
-    .load-progress { font-size:11px; color:#3D7A6A; padding:6px 20px 8px; background:#0D1A16; border-bottom:1px solid #0D1A16; display:none; }
-    .load-progress-bar { height:3px; background:#0D1A16; margin-top:5px; border-radius:2px; overflow:hidden; }
-    .load-progress-fill { height:100%; background:#3D7A6A; border-radius:2px; transition:width 0.3s; width:0%; }
-    .table-topnav { display:flex; align-items:center; justify-content:space-between; padding:7px 12px; background:#0D1A16; border-bottom:1px solid #0D1A16; flex-wrap:wrap; gap:6px; }
+    .load-progress { font-size:11px; color:#39D353; padding:6px 20px 8px; background:#061812; border-bottom:1px solid #061812; display:none; }
+    .load-progress-bar { height:3px; background:#061812; margin-top:5px; border-radius:2px; overflow:hidden; }
+    .load-progress-fill { height:100%; background:#39D353; border-radius:2px; transition:width 0.3s; width:0%; }
+    .table-topnav { display:flex; align-items:center; justify-content:space-between; padding:7px 12px; background:#061812; border-bottom:1px solid #061812; flex-wrap:wrap; gap:6px; }
     .table-topnav .pagination-info { font-size:11px; color:#4A5578; }
     .table-topnav .pagination-info b { color:#7E8DB0; }
     .table-topnav .page-btns { display:flex; gap:4px; }
   </style>
 </head>
-<body style="background:#0D1A16;color:#E2E8F5;min-height:100vh">
+<body style="background:#061812;color:#E2E8F5;min-height:100vh">
 <style>
-html,body,div,main,section,table,tbody,tr,td,th,thead { background-color: #0D1A16 !important; color: #E2E8F5; }
-thead th { background-color: #0D1A16 !important; color: #7E8DB0 !important; }
-tbody tr:hover td { background-color: #0D1A16 !important; }
-.table-wrap, .controls, .stats-bar, .legend, .site-header, .ad-banner, footer { background-color: #0D1A16 !important; }
-.controls { background-color: #0D1A16 !important; }
-.stats-bar { background-color: #0D1A16 !important; }
-input[type=text], select { background-color: #0D1A16 !important; color: #E2E8F5 !important; border-color: #152E28 !important; }
+html,body,div,main,section,table,tbody,tr,td,th,thead { background-color: #061812 !important; color: #E2E8F5; }
+thead th { background-color: #061812 !important; color: #7E8DB0 !important; }
+tbody tr:hover td { background-color: #061812 !important; }
+.table-wrap, .controls, .stats-bar, .legend, .site-header, .ad-banner, footer { background-color: #061812 !important; }
+.controls { background-color: #061812 !important; }
+.stats-bar { background-color: #061812 !important; }
+input[type=text], select { background-color: #061812 !important; color: #E2E8F5 !important; border-color: #0D3B1A !important; }
 </style>
 
   <!-- ██████████  AD BANNER TOPO  ██████████ -->
@@ -417,7 +417,7 @@ input[type=text], select { background-color: #0D1A16 !important; color: #E2E8F5 
     <div class="table-topnav" id="table-topnav-top">
       <div class="pagination-info" id="pagination-info-top">—</div>
       <div class="page-btns" id="page-btns-top"></div>
-      <select id="per-page-top" onchange="syncPerPage('top')" style="height:26px;font-size:11px;padding:0 6px;border-radius:5px;border:1px solid #152E28;background:#0D1A16;color:#7E8DB0;cursor:pointer;font-family:'Inter',sans-serif;">
+      <select id="per-page-top" onchange="syncPerPage('top')" style="height:26px;font-size:11px;padding:0 6px;border-radius:5px;border:1px solid #0D3B1A;background:#061812;color:#7E8DB0;cursor:pointer;font-family:'Inter',sans-serif;">
         <option value="1">1</option>
         <option value="5">5</option>
         <option value="10">10</option>
@@ -454,7 +454,7 @@ input[type=text], select { background-color: #0D1A16 !important; color: #E2E8F5 
   <div class="pagination" id="pagination">
     <div class="pagination-info" id="pagination-info">—</div>
     <div class="page-btns" id="page-btns"></div>
-    <select id="per-page-bottom" onchange="syncPerPage('bottom')" style="height:28px;font-size:11px;padding:0 6px;border-radius:5px;border:1px solid #152E28;background:#0D1A16;color:#7E8DB0;cursor:pointer;font-family:'Inter',sans-serif;">
+    <select id="per-page-bottom" onchange="syncPerPage('bottom')" style="height:28px;font-size:11px;padding:0 6px;border-radius:5px;border:1px solid #0D3B1A;background:#061812;color:#7E8DB0;cursor:pointer;font-family:'Inter',sans-serif;">
       <option value="1">1 empresa</option>
       <option value="5">5 empresas</option>
       <option value="10">10 empresas</option>
