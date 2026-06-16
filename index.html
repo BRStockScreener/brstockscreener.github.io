@@ -646,7 +646,7 @@ input[type=text], select { background-color: #0D1A16 !important; color: #E2E8F5 
         <td class="sym">${s.symbol}</td>
         <td><div class="name-cell">${s.name||'—'}</div></td>
         <td><span class="sec-badge">${s.sector||'—'}</span></td>
-        <td style="font-family:'DM Mono',monospace;font-weight:500">$${(s.price||0).toFixed(2)}</td>
+        <td style="font-family:'DM Mono',monospace;font-weight:500">R$${(s.price||0).toFixed(2)}</td>
         <td>${thermCell(s.price, s.fairPrice)}</td>
         <td class="${cc}">${cs}${fmt(s.change1d)}%</td>
         <td style="font-family:'DM Mono',monospace">${fmtB(s.marketCap)}</td>
@@ -864,30 +864,38 @@ input[type=text], select { background-color: #0D1A16 !important; color: #E2E8F5 
       const price = r.regularMarketPrice || 0;
       if (!price) return null;
 
-      const eps  = r.epsTrailingTwelveMonths || null;
-      const pe   = r.priceEarnings           || null;
-      const growthRate = (r.revenueGrowth != null && r.revenueGrowth > 0)
-        ? Math.min(r.revenueGrowth, 0.30)
+      // Brapi field mapping
+      const fd  = r.financialData        || {};
+      const ks  = r.defaultKeyStatistics || {};
+      const sp  = r.summaryProfile       || {};
+
+      const eps  = r.earningsPerShare || ks.trailingEps || fd.eps || null;
+      const pe   = r.priceEarnings    || null;
+      const roe  = fd.returnOnEquity  || null;
+      const revenueGrowth = fd.revenueGrowth || null;
+
+      const growthRate = (revenueGrowth != null && revenueGrowth > 0)
+        ? Math.min(revenueGrowth, 0.30)
         : (pe && pe > 8.5 ? Math.min((pe - 8.5) / 200, 0.30) : 0.08);
 
       const s = {
         symbol:      r.symbol,
         name:        r.longName || r.shortName || r.symbol,
-        sector:      r.summaryProfile?.sector || r.summaryProfile?.industryDisp || null,
+        sector:      sp.sector || sp.sectorDisp || null,
         price:       price,
         change1d:    r.regularMarketChangePercent || 0,
         marketCap:   r.marketCap || 0,
         pe:          pe,
-        pb:          r.priceToBook   || null,
+        pb:          ks.priceToBook || null,
         ps:          null,
-        evEbitda:    null,
-        roe:         r.returnOnEquity ? r.returnOnEquity / 100 : null,
-        roa:         null,
-        grossMargin: r.grossMargins  || null,
-        netMargin:   r.profitMargins || null,
-        opMargin:    r.operatingMargins || null,
-        debtEq:      r.debtToEquity || null,
-        currentRatio:null,
+        evEbitda:    ks.enterpriseToEbitda || null,
+        roe:         roe,
+        roa:         fd.returnOnAssets || null,
+        grossMargin: fd.grossMargins    || null,
+        netMargin:   fd.profitMargins   || null,
+        opMargin:    fd.operatingMargins|| null,
+        debtEq:      fd.debtToEquity    || null,
+        currentRatio:fd.currentRatio    || null,
         eps:         eps,
         fcfPerShare: null,
         divYield:    r.dividendYield ? r.dividendYield / 100 : null,
@@ -909,7 +917,7 @@ input[type=text], select { background-color: #0D1A16 !important; color: #E2E8F5 
       progFill.style.width = Math.max(pct, 1) + '%';
 
       try {
-        const url = `${BRAPI_BASE}/${sym}?modules=summaryProfile`;
+        const url = `${BRAPI_BASE}/${sym}?modules=summaryProfile,financialData,defaultKeyStatistics`;
         const r   = await fetch(url, {
           headers: { 'Authorization': `Bearer ${BRAPI_TOKEN}` }
         });
