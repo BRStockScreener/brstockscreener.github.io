@@ -873,7 +873,7 @@ input[type=text], select { background-color: #0D1A16 !important; color: #E2E8F5 
       const s = {
         symbol:      r.symbol,
         name:        r.longName || r.shortName || r.symbol,
-        sector:      null,
+        sector:      r.summaryProfile?.sector || r.summaryProfile?.industryDisp || null,
         price:       price,
         change1d:    r.regularMarketChangePercent || 0,
         marketCap:   r.marketCap || 0,
@@ -899,7 +899,7 @@ input[type=text], select { background-color: #0D1A16 !important; color: #E2E8F5 
       return s;
     }
 
-    // Brapi aceita múltiplos tickers numa chamada só — lotes de 10
+    // Brapi — lotes de 10 tickers por chamada
     const BATCH = 10;
     const total = TICKERS.length;
 
@@ -911,9 +911,15 @@ input[type=text], select { background-color: #0D1A16 !important; color: #E2E8F5 
       progFill.style.width = Math.max(pct, 1) + '%';
 
       try {
-        const url = `${BRAPI_BASE}/${symbols}?token=${BRAPI_TOKEN}&modules=defaultKeyStatistics,financialData`;
-        const r   = await fetch(url);
-        if (!r.ok) { console.warn('Brapi erro:', r.status); continue; }
+        const url = `${BRAPI_BASE}/${symbols}?modules=summaryProfile`;
+        const r   = await fetch(url, {
+          headers: { 'Authorization': `Bearer ${BRAPI_TOKEN}` }
+        });
+        if (!r.ok) {
+          const err = await r.text();
+          console.warn('Brapi erro:', r.status, err.slice(0,100));
+          continue;
+        }
         const data = await r.json();
         const results = data?.results || [];
         for (const item of results) {
@@ -923,8 +929,8 @@ input[type=text], select { background-color: #0D1A16 !important; color: #E2E8F5 
         updateUI();
       } catch(e) { console.error('Brapi fetch erro:', e); }
 
-      // 500ms entre lotes — Brapi free tem limite generoso mas sem exagerar
-      if (i + BATCH < total) await new Promise(r => setTimeout(r, 500));
+      // 300ms entre lotes
+      if (i + BATCH < total) await new Promise(r => setTimeout(r, 300));
     }
 
     prog.style.display = 'none';
