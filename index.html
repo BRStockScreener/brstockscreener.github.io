@@ -864,19 +864,16 @@ input[type=text], select { background-color: #061812 !important; color: #E2E8F5 
       const price = r.regularMarketPrice || 0;
       if (!price) return null;
 
-      // Brapi field mapping
-      const fd  = r.financialData        || {};
-      const ks  = r.defaultKeyStatistics || {};
-      const sp  = r.summaryProfile       || {};
+      const sp  = r.summaryProfile || {};
 
-      const eps  = r.earningsPerShare || ks.trailingEps || fd.eps || null;
-      const pe   = r.priceEarnings    || null;
-      const roe  = fd.returnOnEquity  || null;
-      const revenueGrowth = fd.revenueGrowth || null;
+      // EPS vem direto no response sem precisar de módulo pago
+      const eps = r.earningsPerShare || null;
+      const pe  = r.priceEarnings   || null;
 
-      const growthRate = (revenueGrowth != null && revenueGrowth > 0)
-        ? Math.min(revenueGrowth, 0.30)
-        : (pe && pe > 8.5 ? Math.min((pe - 8.5) / 200, 0.30) : 0.08);
+      // Estima crescimento pelo P/L quando não tem dados históricos
+      const growthRate = (pe && pe > 8.5 && pe < 100)
+        ? Math.min((pe - 8.5) / 200, 0.30)
+        : 0.08;
 
       const s = {
         symbol:      r.symbol,
@@ -886,16 +883,16 @@ input[type=text], select { background-color: #061812 !important; color: #E2E8F5 
         change1d:    r.regularMarketChangePercent || 0,
         marketCap:   r.marketCap || 0,
         pe:          pe,
-        pb:          ks.priceToBook || null,
+        pb:          null,
         ps:          null,
-        evEbitda:    ks.enterpriseToEbitda || null,
-        roe:         roe,
-        roa:         fd.returnOnAssets || null,
-        grossMargin: fd.grossMargins    || null,
-        netMargin:   fd.profitMargins   || null,
-        opMargin:    fd.operatingMargins|| null,
-        debtEq:      fd.debtToEquity    || null,
-        currentRatio:fd.currentRatio    || null,
+        evEbitda:    null,
+        roe:         null,
+        roa:         null,
+        grossMargin: null,
+        netMargin:   null,
+        opMargin:    null,
+        debtEq:      null,
+        currentRatio:null,
         eps:         eps,
         fcfPerShare: null,
         divYield:    r.dividendYield ? r.dividendYield / 100 : null,
@@ -917,7 +914,7 @@ input[type=text], select { background-color: #061812 !important; color: #E2E8F5 
       progFill.style.width = Math.max(pct, 1) + '%';
 
       try {
-        const url = `${BRAPI_BASE}/${sym}?modules=summaryProfile,financialData,defaultKeyStatistics`;
+        const url = `${BRAPI_BASE}/${sym}?modules=summaryProfile`;
         const r   = await fetch(url, {
           headers: { 'Authorization': `Bearer ${BRAPI_TOKEN}` }
         });
