@@ -899,38 +899,37 @@ input[type=text], select { background-color: #0D1A16 !important; color: #E2E8F5 
       return s;
     }
 
-    // Brapi — lotes de 10 tickers por chamada
-    const BATCH = 10;
+    // Brapi free — 1 ticker por requisição
     const total = TICKERS.length;
 
-    for (let i = 0; i < total; i += BATCH) {
-      const batch   = TICKERS.slice(i, i + BATCH);
-      const symbols = batch.join(',');
-      const pct     = Math.round((i / total) * 100);
-      progText.textContent = `${i+1}–${Math.min(i+BATCH,total)}/${total} — ${allData.length} carregadas`;
+    for (let i = 0; i < total; i++) {
+      const sym = TICKERS[i];
+      const pct = Math.round((i / total) * 100);
+      progText.textContent = `${i+1}/${total} — ${sym} — ${allData.length} carregadas`;
       progFill.style.width = Math.max(pct, 1) + '%';
 
       try {
-        const url = `${BRAPI_BASE}/${symbols}?modules=summaryProfile`;
+        const url = `${BRAPI_BASE}/${sym}?modules=summaryProfile`;
         const r   = await fetch(url, {
           headers: { 'Authorization': `Bearer ${BRAPI_TOKEN}` }
         });
         if (!r.ok) {
-          const err = await r.text();
-          console.warn('Brapi erro:', r.status, err.slice(0,100));
+          console.warn('Brapi erro:', sym, r.status);
           continue;
         }
         const data = await r.json();
-        const results = data?.results || [];
-        for (const item of results) {
+        const item = data?.results?.[0];
+        if (item) {
           const parsed = parseStock(item);
-          if (parsed) allData.push(parsed);
+          if (parsed) {
+            allData.push(parsed);
+            if (allData.length % 5 === 0) updateUI();
+          }
         }
-        updateUI();
-      } catch(e) { console.error('Brapi fetch erro:', e); }
+      } catch(e) { console.error('Brapi erro:', sym, e); }
 
-      // 300ms entre lotes
-      if (i + BATCH < total) await new Promise(r => setTimeout(r, 300));
+      // 200ms entre requisições = ~5 req/s, seguro para o free
+      if (i + 1 < total) await new Promise(r => setTimeout(r, 200));
     }
 
     prog.style.display = 'none';
